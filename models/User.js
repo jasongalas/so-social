@@ -1,27 +1,32 @@
 const { Schema, model } = require('mongoose');
 
-const courseSchema = new Schema(
+const userSchema = new Schema(
   {
-    courseName: {
+    userName: { 
       type: String,
+      unique: true,
       required: true,
+      trim: true,
     },
-    inPerson: {
-      type: Boolean,
-      default: true,
+
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+      validation: true,
     },
-    startDate: {
-      type: Date,
-      default: Date.now(),
-    },
-    endDate: {
-      type: Date,
-      default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
-    },
-    students: [
+
+    thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'student',
+        ref: 'thoughts',
+      },
+    ],
+    
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
       },
     ],
   },
@@ -33,6 +38,6 @@ const courseSchema = new Schema(
   }
 );
 
-const Course = model('course', courseSchema);
+const User = model('user', userSchema);
 
-module.exports = Course;
+module.exports = User;
