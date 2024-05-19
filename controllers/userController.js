@@ -4,7 +4,7 @@ module.exports = {
   // Get all users
   async getUsers(req, res) {
     try {
-      const users = await User.find();
+      const users = await User.find().populate('thoughts');
       return res.json(users);
     } catch (err) {
       console.log(err);
@@ -14,9 +14,7 @@ module.exports = {
   // Get a single user
   async getSingleUser(req, res) {
     try {
-      const user = await User.findOne({ _id: req.params.userId })
-        .select('-__v')
-        .lean();
+      const user = await User.findOne({ _id: req.params.userId }).populate('thoughts');
 
       if (!user) {
         return res.status(404).json({ message: 'No user has that ID :[' });
@@ -40,7 +38,7 @@ module.exports = {
   // Delete a user and remove their thoughts
   async deleteUser(req, res) {
     try {
-      const byeUser = await Student.findOneAndRemove({ _id: req.params.userId });
+      const byeUser = await User.findOneAndRemove({ _id: req.params.userId });
 
       if (!byeUser) {
         return res.status(404).json({ message: 'No such user exists' })
@@ -90,7 +88,7 @@ module.exports = {
     try {
       const byeFriend = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $pull: { friends: { userId: req.params.userId } } },
+        { $pull: { friends: { friendId: req.params.friendId } } },
         { runValidators: true, new: true }
       );
 

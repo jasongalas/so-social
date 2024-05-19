@@ -38,7 +38,7 @@ connection.once('open', async () => {
   // Add users to the collection and await the results
   const userData = await User.insertMany(users);
 
-  // Add courses to the collection and await the results
+  // Add thoughts to the collection and await the results
   const thoughts = [
     {
       thoughtText: "I've got my first gig at a bar in a month and I'm so nervous but so excited for it too!",
