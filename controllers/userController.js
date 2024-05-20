@@ -44,8 +44,8 @@ module.exports = {
         return res.status(404).json({ message: 'No such user exists' })
       }
 
-      const thought = await Thought.findOneAndUpdate(
-        { thoughts: req.params.thoughtId },
+      const thought = await Thought.deleteMany(
+        { userId: req.params.userId },
         { $pull: { thoughts: req.params.thoughtId } },
         { new: true }
       );
@@ -56,7 +56,7 @@ module.exports = {
         });
       }
 
-      res.json({ message: 'User successfully deleted' });
+      res.json({ message: 'User and associated thoughts successfully deleted' });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -68,7 +68,7 @@ module.exports = {
     try {
       const hiFriend = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $addToSet: { friends: req.body } },
+        { $addToSet: { friends: req.params.friendId } },
         { runValidators: true, new: true }
       );
 
@@ -88,7 +88,7 @@ module.exports = {
     try {
       const byeFriend = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $pull: { friends: { friendId: req.params.friendId } } },
+        { $pull: { friends: req.params.friendId } },
         { runValidators: true, new: true }
       );
 
