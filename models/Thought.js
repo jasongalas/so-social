@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+  const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
@@ -34,6 +34,6 @@ thoughtSchema.virtual('Reaction Count').get(function(){
   return this.reactions.length;
 });
 
-const Thought = model('thoughts', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;

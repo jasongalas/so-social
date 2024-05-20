@@ -19,7 +19,7 @@ connection.once('open', async () => {
   const users = [
     {
       username: "Paws",
-      email: "pawsatwork@gmail.com"
+      email: "pawsatwork@gmail.com",
     },
     {
       username: "Tigrr",
@@ -41,11 +41,9 @@ connection.once('open', async () => {
   // Add thoughts to the collection and await the results
   const thoughts = [
     {
-      thoughtText: "I've got my first gig at a bar in a month and I'm so nervous but so excited for it too!",
-      username: userData[0].username,
+      
       reactions: [{
-        reactionBody: "It's gonna be so good! Can't wait to be there <3",
-        username: userData[1].username,
+        ,
       },
       {
         reactionBody: "Can't wait to dance the night away!",

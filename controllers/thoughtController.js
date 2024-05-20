@@ -1,4 +1,4 @@
-const { Thought } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
   // Get all thoughts
@@ -48,7 +48,7 @@ module.exports = {
     try {
       const byeThought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
       await User.findOneAndUpdate(
-        { _id: thought.userId },
+        { _id: req.body.userId },
         { $pull: { thoughts: req.params.thoughtId } },
         { new: true }
       );
@@ -98,9 +98,9 @@ module.exports = {
   // Delete a reaction
   async deleteReaction(req, res) {
     try {
-      const byeReaction = await Thought.findOneAndDelete(
-        { _id: req.params.userId },
-        { $pull: { reactions: req.params.reactionId } },
+      const byeReaction = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $pull: { reactions: { reactionId: req.params.reactionId } } },
         { runValidators: true, new: true });
 
       if (!byeReaction) {
